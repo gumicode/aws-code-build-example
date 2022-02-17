@@ -1,0 +1,35 @@
+version: 0.2
+
+env:
+  variables:
+    AWS_ACCESS_KEY_ID:
+    AWS_SECRET_ACCESS_KEY:
+    AWS_ACCOUNT_ID:
+    AWS_REGION: ap-northeast-2
+    IMAGE_NAME: aws-code-build-example
+    TAGS: latest
+
+phases:
+  pre_build:
+    commands:
+      - echo Entered the pre_build phase...
+      - export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+    finally:
+      - echo This always runs even if the login command fails
+  build:
+    commands:
+      - echo Entered the build phase...
+      - ./gradlew bootBuildImage --imageName=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${IMAGE_NAME}:${TAGS}
+    finally:
+      - echo This always runs even if the install command fails
+  post_build:
+    commands:
+      - echo Entered the post_build phase...
+      - echo Build completed on `date`
+      - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${IMAGE_NAME}:${TAGS}
+
+cache:
+  paths:
+    - '/root/.m2/**/*'
