@@ -2,12 +2,12 @@ version: 0.2
 
 env:
   variables:
-    AWS_ACCESS_KEY_ID:
-    AWS_SECRET_ACCESS_KEY:
-    AWS_ACCOUNT_ID:
-    AWS_REGION: ap-northeast-2
-    IMAGE_NAME: aws-code-build-example
-    TAGS: latest
+    AWS_ACCESS_KEY_ID: # AWS IAM 에서 발급한 KEY ID 입력
+    AWS_SECRET_ACCESS_KEY: # AWS IAM 에서 발급한 SECERT 입력
+    AWS_ACCOUNT_ID: # 숫자로 이루어진 계정 ID,  https://console.aws.amazon.com/billing/home?#/account 접속후 가장 상단에 있는 계정 ID
+    AWS_REGION: ap-northeast-2 # 리전 정보 , 서울리전의 경우 ap-northeast-2
+    IMAGE_NAME: aws-code-build-example # 컨테이너 이미지 이름
+    TAGS: latest # 컨테이너 이미지 tags
 
 phases:
   pre_build:
