@@ -2,11 +2,13 @@
 
 본 프로젝트는 aws code build 서비스를 이용하기 위한 예제 소스코드 입니다. 자세한 내용은 아래의 글을 참고 해 주세요.
 
-[AWS Code Build](https://blog.gumicode.com/docs/aws/AWS%20CodeBuild)
+[AWS Code Build 블로그 글 내용 참고](https://blog.gumicode.com/docs/aws/AWS%20CodeBuild)
 
 ## 예제 소스 코드 분석
 
-예제 소스코드는 Java Spring Boot 프로젝트이다. 코드는 아래와 같이 매우 단순한 프로젝트 이다. 단 여기서 중요한 부분은 <code>buildspec.yml</code> 파일이다.
+AWS CodeCommit 과 AWS ECR 과 연동 예제 소스코드 입니다.
+
+예제 소스코드는 Java Spring Boot 프로젝트 입니다. 코드는 아래와 같습니다. 단 여기서 중요한 부분은 <code>buildspec.yml</code> 파일 입니다.
 
 **HomeController.java**
 ```java 
@@ -69,3 +71,8 @@ AWS CodeBuild 의 핵심은 바로 <code>buildspec.yml</code> 이다. 이 파일
 - **build.commands** : 실제로 docker 를 빌드하는 명령어를 입력한다. 일반적으로 Dockfile 를 정의하여 사용하지만, spring boot 2.3 버전 이후부터는 Dockfile 을 만들지 않아도 빌드하는 방법을 제공한다. gradle 명령어는 <code>bootBuildImage</code> 이다.
 - **post_build.commands** : 주로 빌드가 완료된 컨테이너 이미지를 컨테이너 저장소로 업로드할 때 사용한다.
 
+## 주의사항
+
+위 에서 입력한 명령어를 정상적으로 실행하기 위해서는 AWS ECR 권한을 추가해 주어야 한다. 권한은 AWS IAM 에서 설정할 수 있다.
+
+[AWS ECR 블로그 내용 참고](https://blog.gumicode.com/docs/aws/AWS%20ECR.html)
